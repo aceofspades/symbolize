@@ -1,5 +1,5 @@
 en:
-  activerecord:
+  activemodel:
     attributes:
     symbolizes:
       user:

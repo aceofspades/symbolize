@@ -45,6 +45,13 @@ ActiveRecord:
 
       symbolize :kind, :in => [:im, :mobile, :email], :scopes => true
 
+ActiveModel:
+
+    class Contact
+      include ActiveModel
+      include Symbolize::ActiveModel
+
+      symbolize :kind, :in => [:im, :mobile, :email], :scopes => true
 
 Mongoid:
 

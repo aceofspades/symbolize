@@ -47,11 +47,11 @@ end
 unless ENV["ONLY_MONGOID"]
 
   require 'active_record'
-  require 'symbolize/active_record'
+  require 'symbolize/active_model'
 
   puts "Using ActiveRecord #{ActiveRecord::VERSION::STRING}"
 
-  ActiveRecord::Base.send :include, Symbolize::ActiveRecord # this is normally done by the railtie
+  ActiveRecord::Base.send :include, Symbolize::ActiveModel # this is normally done by the railtie
 
   ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:") #'postgresql', :database => 'symbolize_test', :username => 'postgres')
 

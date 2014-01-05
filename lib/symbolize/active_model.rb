@@ -3,10 +3,10 @@ require 'active_support/concern'
 module Symbolize
 end
 
-module Symbolize::ActiveRecord
+module Symbolize::ActiveModel
   extend ActiveSupport::Concern
 
-  # Symbolize ActiveRecord attributes. Add
+  # Symbolize ActiveModel attributes. Add
   #   symbolize :attr_name
   # to your model class, to make an attribute return symbols instead of
   # string values. Setting such an attribute will accept symbols as well
@@ -22,6 +22,13 @@ module Symbolize::ActiveRecord
   #     }
   #     symbolize :gui, , :in => [:gnome, :kde, :xfce], :allow_blank => true
   #     symbolize :browser, :in => [:firefox, :opera], :i18n => false
+  #   end
+  #  
+  #   or
+  #  
+  #   class User
+  #     include ActiveModel
+  #     include Symbolize::ActiveModel
   #   end
   #
   # It will automattically lookup for i18n:
@@ -80,7 +87,7 @@ module Symbolize::ActiveRecord
           const_set const.upcase, values unless const_defined? const.upcase
           ev = if i18n
             # This one is a dropdown helper
-            code =  "#{const.upcase}.map { |k,v| [I18n.translate(\"activerecord.symbolizes.\#{ActiveSupport::Inflector.underscore(self.model_name)}.#{attr_name}.\#{k}\"), k] }" #.to_sym rescue nila
+            code =  "#{const.upcase}.map { |k,v| [I18n.translate(\"activemodel.symbolizes.\#{ActiveSupport::Inflector.underscore(self.model_name)}.#{attr_name}.\#{k}\"), k] }" #.to_sym rescue nila
             "def self.get_#{const}; #{code}; end;"
           else
             "def self.get_#{const}; #{const.upcase}.map(&:reverse); end"
@@ -169,7 +176,7 @@ module Symbolize::ActiveRecord
   # Return an attribute's i18n
   def read_i18n_attribute attr_name
     attr = read_attribute(attr_name)
-    t = I18n.translate("activerecord.symbolizes.#{self.class.model_name.to_s.underscore}.#{attr_name}.#{attr}") #.to_sym rescue nila
+    t = I18n.translate("activemodel.symbolizes.#{self.class.model_name.to_s.underscore}.#{attr_name}.#{attr}") #.to_sym rescue nila
     t.is_a?(Hash) ? nil : t
   end
 

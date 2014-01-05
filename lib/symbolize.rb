@@ -1,6 +1,6 @@
 # Todo: is this the best way for AR?
 module Symbolize
-  autoload :ActiveRecord, 'symbolize/active_record'
+  autoload :ActiveModel, 'symbolize/active_model'
 end
 
 require 'symbolize/mongoid' if defined? Mongoid
